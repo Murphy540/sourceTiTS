@@ -2562,7 +2562,7 @@ public function teaseReactions(damage:Number,target:Creature):String {
 		else if (damage < 4) buffer = "The virgin huntress blushes and begins eagerly touching one of her [vanaeMaiden.nipples]. She's clearly aroused by your performance.";
 		else if (damage < 10) buffer = "The virgin huntress lets out a little moan and slips one of her webbed hands between her thighs. She awkwardly teases her glistening slit, getting all worked up.";
 		else if (damage < 20) buffer = "The young alien huntress places a hand over her loins and rubs her thighs together. She's desperately trying to hide her rather obvious arousal. The sweet scent of her arousal fills the air.";
-		else buffer = "The wispy amazon parts her thighs and begins to stroke her twin clits to your lewd display, unable to stop herself. A few seconds later she jerks her webbed back, flushing wildly.";
+		else buffer = "The wispy amazon parts her thighs and begins to stroke her twin clits to your lewd display, unable to stop herself. A few seconds later she jerks her webbed hand back, flushing wildly.";
 	}
 	else if (target.plural) {
 		if (damage == 0) buffer = target.capitalA + target.short + " seem unimpressed.";

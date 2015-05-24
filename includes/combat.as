@@ -764,7 +764,7 @@ public function updateCombatStatuses():void {
 			if (!lFailed)
 			{
 				var lDamage:TypeCollection = new TypeCollection( { tease: 5 + rand(3) } );
-				var dResult:DamageResult = applyDamage(lDamage, pc, foes[x], "supress");
+				var dResult:DamageResult = applyDamage(lDamage, pc, foes[x], "suppress");
 			}
 			
 			output("[goo.name] dances around, flashing plenty of tits and ass for " + foes[x].a + foes[x].short + ".");
@@ -774,8 +774,10 @@ public function updateCombatStatuses():void {
 			}
 			else
 			{
-				output(" " + foes[x].capitalA + foes[x].short + " stares mesmerized at [goo.name]'s dance, flushing with lust. (<b>" + dResult.lustDamage + "</b>)");
+				output(" " + foes[x].capitalA + foes[x].short + " stares mesmerized at [goo.name]'s dance, flushing with lust.");
 			}
+			
+			outputDamage(dResult);
 		}
 	}
 	userInterface.playerStatusEffects = this.chars["PC"].statusEffects;	
@@ -958,6 +960,7 @@ public function grappleStruggle():void {
 	{
 		if(pc.reflexes() + rand(20) + 7 + pc.statusEffectv1("Grappled") * 5 > pc.statusEffectv2("Grappled")) {
 			if (foes[0] is SexBot) output("You almost dislocate an arm doing it, but, ferret-like, you manage to wriggle out of the sexbot’s coils. Once your hands are free, the droid does not seem to know how to respond, and you are able to grapple the rest of your way out easily, ripping away from its molesting grip. The sexbot clicks and stutters a few times before going back to staring at you blankly, swinging its fibrous limbs over its head.");
+			if (foes[0] is MaidenVanae || foes[0] is HuntressVanae) vanaeEscapeGrapple("Escape Artist");
 			else output("You display a remarkable amount of flexibility as you twist and writhe to freedom.");
 			pc.removeStatusEffect("Grappled");
 		}
@@ -3636,10 +3639,10 @@ public function gasGrenade(target:Creature):void
 		adultCockvineGrenadesInEnclosedSpaces(damage, false, false, true);
 	}
 	
-	var damageResult:DamageResult = applyDamage(damage, pc, target, "supress");
+	var damageResult:DamageResult = applyDamage(damage, pc, target, "suppress");
 	output("\n");
 	output(teaseReactions(damageResult.lustDamage, target));
-	output(" (<b>"+ Math.round(damageResult.lustDamage) + "</b>)\n");
+	outputDamage(damageResult);
 	processCombat();
 }
 
@@ -3669,11 +3672,10 @@ public function goozookaCannon(target:Creature):void
 			if (target.HP() + heal > target.HPMax()) heal = target.HPMax() - target.HP();
 			
 			damage = new TypeCollection( { tease: 5 } );
-			damageResult = applyDamage(damage, pc, target, "supress");
+			damageResult = applyDamage(damage, pc, target, "suppress");
 			
 			output("The Gray Goo absorbs her smaller twin on contact.");
 			output(" (Heals " + heal + ")");
-			output(" (Lust Damage " + damageResult.lustDamage + ")\n");
 			
 			target.HP(heal);
 		}
@@ -3682,11 +3684,12 @@ public function goozookaCannon(target:Creature):void
 			output("\n\nThe gray goo splatters across " + target.a + target.short + ", quickly congealing into a miniature googirl who quickly goes to work, attacking your enemy's most sensitive spots with gusto. ");
 		
 			damage = new TypeCollection( { tease: 33 } );
-			damageResult = applyDamage(damage, pc, target, "supress");
+			damageResult = applyDamage(damage, pc, target, "suppress");
 			output("\n");
 			output(teaseReactions(damageResult.lustDamage, target));
-			output(" (<b>" + damageResult.lustDamage + "</b>)\n");
 		}
+		
+		outputDamage(damageResult);
 	}
 	
 	processCombat();
@@ -3907,18 +3910,21 @@ public function shieldHack(target:Creature):void
 	var damage:TypeCollection = damageRand(new TypeCollection( { electric: 25 + pc.level * 5 } ), 15);
 	damage.addFlag(DamageFlag.ONLY_SHIELD);
 	
-	var damageResult:DamageResult = calculateDamage(damage, pc, target, "supress");
+	var damageResult:DamageResult = calculateDamage(damage, pc, target, "suppress");
 	
 	if(target.shields() > 0)
 	{
-		if(target.plural) output(" " + target.a + possessive(target.short) + " shields crackle but hold. (<b>" + damageResult.shieldDamage + "</b>)");
-		else output(" " + target.a + possessive(target.short) + " shield crackles but holds. (<b>" + damageResult.shieldDamage + "</b>)");
+		if(target.plural) output(" " + target.a + possessive(target.short) + " shields crackle but hold.");
+		else output(" " + target.a + possessive(target.short) + " shield crackles but holds.");
 	}
 	else
 	{
-		if(!target.plural) output(" There is a concussive boom and tingling aftershock of energy as " + target.a + possessive(target.short) + " shield is breached. (<b>" + damageResult.shieldDamage + "</b>)");
-		else output(" There is a concussive boom and tingling aftershock of energy as " + target.a + possessive(target.short) + " shields are breached. (<b>" + damageResult.shieldDamage + "</b>)");
+		if(!target.plural) output(" There is a concussive boom and tingling aftershock of energy as " + target.a + possessive(target.short) + " shield is breached.");
+		else output(" There is a concussive boom and tingling aftershock of energy as " + target.a + possessive(target.short) + " shields are breached.");
 	}
+	
+	outputDamage(damageResult);
+	
 	output("\n");
 	processCombat();
 }

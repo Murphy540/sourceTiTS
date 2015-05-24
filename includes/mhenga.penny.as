@@ -507,13 +507,16 @@ public function zilFlyingSpinKick():void {
 		//Apply damage reductions
 		if (damageResult.shieldDamage > 0) 
 		{
-			if (damageResult.hpDamage == 0)	output(" Your shield crackles but holds. (<b>" + damageResult.totalDamage + "</b>)");
-			else output(" There is a concussive boom and tingling aftershock of energy as your shield is breached. (<b>" + damageResult.totalDamage + "</b>)");
+			if (damageResult.hpDamage == 0)
+			{
+				output(" Your shield crackles but holds.");
+			}
+			else output(" There is a concussive boom and tingling aftershock of energy as your shield is breached.");
 		}
 		
 		if(damageResult.hpDamage > 0) 
 		{
-			if (damageResult.shieldDamage == 0) output(" The armored bootheel connects with your cheek hard enough to turn your head and leave you seeing stars. (<b>" + damageResult.totalDamage + "</b>)");
+			if (damageResult.shieldDamage == 0) output(" The armored bootheel connects with your cheek hard enough to turn your head and leave you seeing stars.");
 				
 			if (!pc.hasStatusEffect("Stunned"))
 			{
@@ -521,6 +524,8 @@ public function zilFlyingSpinKick():void {
 				pc.createStatusEffect("Stunned",1,0,0,0,false,"Stun","You are stunned and cannot move until you recover!",true,0);
 			}
 		}
+		
+		if (damageResult.shieldDamage > 0 || damageResult.hpDamage > 0) outputDamage(damageResult);
 	}
 	processCombat();
 }
@@ -2113,7 +2118,7 @@ public function getAssFuckedByPenny():void {
 	
 	output("\n\n<i>“So good...”</i>  Penny whimpers, ");
 	//if PC is tight
-	if(pc.analCapacity() * 1.25 <= penny.cockVolume(0)) output("<i>“so t-tiiiight...”</i>");
+	if(pc.ass.looseness() <= 1) output("<i>“so t-tiiiight...”</i>");
 	else if(pc.ass.looseness() <= 3) output("<i>“fits just like a glove...”</i>");
 	//if PC is SUPAH LOOSE:
 	else output("<i>“m-maybe I ought to grow this beast out a little, [pc.name]... if I want to keep up with a gaped slut like you....”</i>");

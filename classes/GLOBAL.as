@@ -578,6 +578,7 @@
 			TYPE_BEE,
 			TYPE_SIMII,
 			TYPE_RASKVEL,
+			TYPE_KUITAN
 		];
 		
 		public static const VALID_COCK_FLAGS:Array = [

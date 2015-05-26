@@ -3599,7 +3599,7 @@
 		{
 			if (tailCount == 0) return "ERROR: No tails!";
 			else if (tailCount == 1) return "your " + tailDescript();
-			else return "each of your " + tailDescript();
+			else return "each of your " + tailsDescript();
 		}
 		public function tailsDescript():String {
 			if(tailCount == 1) return tailDescript();

@@ -70,11 +70,24 @@ package classes.TITSSaveEdit.UI.Controls
 			_underline.x = 5;
 			_underline.y = _header.y + _header.height - 2;
 			
-			for (var i:int = 0; i < GLOBAL.DamageTypeStrings.length - 1; i++)
+
+			var DamageTypeStrings:Array = [		
+			"Kinetic",		
+			"Slashing",		
+			"Piercing",		
+			"Laser",		
+			"Plasma",		
+			"Gravitic",		
+			"Electrical",	
+			"Thermal",		
+			"Not Applicable"
+		];		
+			
+			for (var i:int = 0; i < DamageTypeStrings.length - 1; i++)
 			{
 				var newControl:InputLabelPair = new InputLabelPair();
 				AddControl(newControl);
-				newControl.labelText = GLOBAL.DamageTypeStrings[i];
+				newControl.labelText = DamageTypeStrings[i];
 				newControl.setRestriction(InputLabelPair.RESTRICT_NUMBER);
 				
 				_resistances.push(newControl);

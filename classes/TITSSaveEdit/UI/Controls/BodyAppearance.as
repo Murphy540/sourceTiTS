@@ -82,6 +82,20 @@ package classes.TITSSaveEdit.UI.Controls
 			_wingType = new ComboLabelPair();
 			AddControl(_wingType);
 			
+			var WING_NAMES:Array = [
+				0,
+				"Bee",
+				"Small Bee",
+				"Small Demonic",
+				"Small Draconic",
+				"Shark",
+				"Avian",
+				"Dragonfly",
+				"Draconic",
+			];
+		
+		
+			
 			for (var i:int = 0; i < GLOBAL.VALID_WING_TYPES.length; i++)
 			{
 				if (GLOBAL.VALID_WING_TYPES[i] == 0)
@@ -90,7 +104,7 @@ package classes.TITSSaveEdit.UI.Controls
 				}
 				else
 				{
-					_wingType.addItem(GLOBAL.VALID_WING_TYPES[i], GLOBAL.TYPE_NAMES[GLOBAL.VALID_WING_TYPES[i]]);
+					_wingType.addItem(GLOBAL.VALID_WING_TYPES[i], WING_NAMES[i]);
 				}
 			}
 			

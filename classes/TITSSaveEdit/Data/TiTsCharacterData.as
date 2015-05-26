@@ -101,6 +101,8 @@ package classes.TITSSaveEdit.Data
 			"cockVirgin",
 			"clitLength",
 			"elasticity",
+			"fertilityRaw",
+			"fertilityMod",
 			"vaginalVirgin",
 			"nippleColor",
 			"nipplesPerBreast",
@@ -226,6 +228,8 @@ package classes.TITSSaveEdit.Data
 		// Sexy Bits -- Cunts
 		public var clitLength:Number;
 		public var elasticity:Number;
+		public var fertilityRaw:Number;
+		public var fertilityMod:Number;
 		public var vaginalVirgin:Boolean;
 		
 		// Sexy Bits -- Titties
@@ -259,6 +263,8 @@ package classes.TITSSaveEdit.Data
 			
 			clitLength = 0.5;
 			elasticity = 1;
+			fertilityRaw = 1;
+			fertilityMod = 0;
 			vaginalVirgin = true;
 			
 			balls = 0;

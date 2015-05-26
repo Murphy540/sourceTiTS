@@ -20,6 +20,8 @@ package classes.TITSSaveEdit.UI.Controls
 		
 		private var _clitLength:InputLabelPair;
 		private var _elasticity:InputLabelPair;
+		private var _fertilityRaw:InputLabelPair;
+		private var _fertilityMod:InputLabelPair;
 		private var _vaginalVirgin:CheckboxContainer;
 		
 		public function get clitLength():Number { return Number(_clitLength.inputValue); }
@@ -28,6 +30,12 @@ package classes.TITSSaveEdit.UI.Controls
 		public function get elasticity():Number { return Number(_elasticity.inputValue); }
 		public function set elasticity(v:Number):void { _elasticity.inputValue = String(v); }
 		
+		public function get fertilityRaw():Number {	return Number(_fertilityRaw.inputValue); }
+		public function set fertilityRaw(v:Number):void	{ _fertilityRaw.inputValue = String(v); }
+
+		public function get fertilityMod():Number {	return Number(_fertilityMod.inputValue); }
+		public function set fertilityMod(v:Number):void	{ _fertilityMod.inputValue = String(v); }
+
 		public function get vaginalVirgin():Boolean { return _vaginalVirgin.selected; }
 		public function set vaginalVirgin(v:Boolean):void { _vaginalVirgin.selected = v; }
 		
@@ -83,6 +91,8 @@ package classes.TITSSaveEdit.UI.Controls
 		public function get flags():Array { return _flags.inputValues; }
 		public function set flags(v:Array):void { _flags.inputValues = v; }
 		
+
+		
 		public function VaginaSettings() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
@@ -123,6 +133,18 @@ package classes.TITSSaveEdit.UI.Controls
 			AddControl(_elasticity);
 			_elasticity.labelText = "Elasticity";
 			_elasticity.setRestriction(InputLabelPair.RESTRICT_NUMBER);
+			
+			_fertilityRaw = new InputLabelPair();
+			AddControl(_fertilityRaw);
+			_fertilityRaw.labelText = "Fertility Raw";
+			_fertilityRaw.setRestriction(InputLabelPair.RESTRICT_NUMBER);
+			
+			_fertilityMod = new InputLabelPair();
+			AddControl(_fertilityMod);
+			_fertilityMod.labelText = "Fertility Mod";
+			_fertilityMod.setRestriction(InputLabelPair.RESTRICT_NUMBER);
+
+			
 			
 			_vaginalVirgin = new CheckboxContainer();
 			AddControl(_vaginalVirgin);

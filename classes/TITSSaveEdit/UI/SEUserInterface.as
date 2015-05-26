@@ -189,6 +189,8 @@ package classes.TITSSaveEdit.UI
 			
 			_mainDisplay.vaginaAppearance.clitLength = char.clitLength;
 			_mainDisplay.vaginaAppearance.elasticity = char.elasticity;
+			_mainDisplay.vaginaAppearance.fertilityRaw = char.fertilityRaw;
+			_mainDisplay.vaginaAppearance.fertilityMod = char.fertilityMod;
 			_mainDisplay.vaginaAppearance.vaginalVirgin = char.vaginalVirgin;
 			_mainDisplay.vaginaAppearance.vaginas = char.vaginas;
 			
@@ -288,6 +290,8 @@ package classes.TITSSaveEdit.UI
 			
 			char.clitLength = _mainDisplay.vaginaAppearance.clitLength;
 			char.elasticity = _mainDisplay.vaginaAppearance.elasticity;
+			char.fertilityRaw = _mainDisplay.vaginaAppearance.fertilityRaw;
+			char.fertilityMod = _mainDisplay.vaginaAppearance.fertilityMod;
 			char.vaginalVirgin = _mainDisplay.vaginaAppearance.vaginalVirgin;
 			char.vaginas = _mainDisplay.vaginaAppearance.vaginas;
 			

@@ -51,6 +51,7 @@
 	import classes.Items.Apparel.*
 	import classes.Items.Miscellaneous.*
 	import classes.Items.Accessories.*
+	import classes.Items.Transformatives.*;
 
 	import classes.Parser.ParseEngine;
 
@@ -109,6 +110,7 @@
 		include "../includes/travelEvents.as";
 		include "../includes/travelEvents.fallOfThePhoenix.as";
 		include "../includes/travelEvents.kiroRescue.as";
+		include "../includes/travelEvents.kiro.as";
 		
 		// Holiday Events
 		include "../includes/event.puppyslutmas.as";
@@ -290,7 +292,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.5.37";
+			version = "0.5.39";
 
 			//temporary nonsense variables.
 			temp = 0;

@@ -28,6 +28,7 @@ import classes.Items.Apparel.TSTArmor;
 import classes.Items.Accessories.JungleLure;
 import classes.Items.Accessories.JungleRepel;
 import classes.Items.Transformatives.Bovinium;
+import classes.Items.Transformatives.OvirAce;
 import classes.Util.RandomInCollection;
 
 public function mhengaShipHangarFunc():Boolean
@@ -185,8 +186,14 @@ public function debugMenusTwo():void
 		quickLoot(new MyrBow());
 	});
 	
-	addButton(5, "Kaede", function():void {
-		flags["MET_KAEDE"] = 1;
+	addButton(5, "OvirTF", function():void {
+		var oa:OvirAce = new OvirAce();
+		oa.quantity = 10;
+		
+		var op:OvirPositive = new OvirPositive();
+		op.quantity = 5;
+		
+		quickLoot(oa);
 	});
 	
 	addButton(7, "Creds", function():void {
@@ -284,17 +291,21 @@ public function barBackRoomBonus():Boolean
 }
 
 public function anonsBarAddendums():Boolean {
-	
+	//Button #7
 	if (saendraBarAddendum())
 	{
 		return true;
 	}
-	
+	//Button #0
 	anonsBarWaitressAddendum();
+	//Button #1
 	alexManHermIntro();
+	//Button #5
 	ShellyBlurb();
+	//#8
 	annoAtAnonsAddendum();
-	
+	//#6 it is!
+	roamingBarEncounter(9);
 	return false;
 }
 

@@ -151,6 +151,7 @@
 		public static const TYPE_COCKVINE:int								= 54;
 		public static const TYPE_NYREA:int									= 55;
 		public static const TYPE_INHUMAN:int 								= 56; //For when you want things to be vaguely like a human's but not quite the same
+		public static const TYPE_OVIR:int									= 57;
 		
 		public static const TYPE_NAMES:Array = [
 			"Human",
@@ -205,7 +206,9 @@
 			"Simii",
 			"Daynar",
 			"Cockvine",
-			"Nyrea"
+			"Nyrea",
+			"Inhuman",
+			"Ovir"
 		];
 		
 		public static const VALID_FACE_TYPES:Array = [
@@ -386,7 +389,8 @@
 			TYPE_RASKVEL,
 			TYPE_NAGA,
 			TYPE_SYDIAN,
-			TYPE_COCKVINE
+			TYPE_COCKVINE,
+			TYPE_OVIR
 		];
 		
 		public static const VALID_TAIL_FLAGS:Array = [

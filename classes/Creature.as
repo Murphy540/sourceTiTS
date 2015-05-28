@@ -25,6 +25,7 @@
 	import classes.GameData.Pregnancy.PregnancyManager;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Util.RandomInCollection;
+	import classes.Util.InCollection;
 	import classes.Engine.Combat.DamageTypes.DamageFlag;
 	
 	import classes.Engine.Utility.num2Text;
@@ -995,7 +996,6 @@
 			_ballFullness = v;
 		}
 		*/
-		
 
 		public function ballFullnessUnlocked(newBallFullness:Number):Boolean
 		{
@@ -1039,6 +1039,15 @@
 			return true;
 		}
 		public function wetnessLockedMessage():String
+		{
+			return "Despite the heat in your groin, nothing changed down there.";
+		}
+		
+		public function analWetnessUnlocked(newWetness:Number):Boolean
+		{
+			return true;
+		}
+		public function analWetnessLockedMessage():String
 		{
 			return "Despite the heat in your groin, nothing changed down there.";
 		}
@@ -1531,6 +1540,9 @@
 				case "boobs":
 				case "tits":
 					buffer = breastDescript(arg2);
+					break;
+				case "lowestBreasts":
+					buffer = breastDescript(bRows()-1);
 					break;
 				case "cockClit":
 					buffer = cockClit(arg2);
@@ -2815,6 +2827,13 @@
 			}
 			return false;
 		}
+		public function removeFaceFlag(arg:int):void
+		{
+			if (hasFaceFlag(arg))
+			{
+				faceFlags = faceFlags.splice(faceFlags.indexOf(arg), 1);
+			}
+		}
 		public function addFaceFlag(arg:int): void {
 			if (!hasFaceFlag(arg)) faceFlags[faceFlags.length] = arg;
 		}
@@ -3047,7 +3066,7 @@
 				adjectives[adjectives.length] = "extensive";
 				//adjectives[adjectives.length] = "protracted"; //This is a turrible tongue adjective.
 				//adjectives[adjectives.length] = "telescopic"; //Only works if it extends in telescopic fashion
-				if (tongueType == GLOBAL.TYPE_LEITHAN) adjectives[adjectives.length] = "extendable";
+				if (tongueType == GLOBAL.TYPE_LEITHAN || tongueType == GLOBAL.TYPE_OVIR) adjectives[adjectives.length] = "extendable";
 				if (tongueType == GLOBAL.TYPE_DEMONIC) adjectives[adjectives.length] = "two-foot long";
 				if (tongueType == GLOBAL.TYPE_DRACONIC) adjectives[adjectives.length] = "four-foot long";
 			}
@@ -3121,6 +3140,12 @@
 				types[types.length] = "narrow";
 				types[types.length] = "forked";
 				types[types.length] = "leithan";
+			}
+			else if (tongueType == GLOBAL.TYPE_OVIR)
+			{
+				types.push("smooth");
+				types.push("ovir");
+				types.push("thick");
 			}
 			else if(tongueType == GLOBAL.TYPE_LAPINE)
 			{
@@ -3555,6 +3580,11 @@
 				adjectives[adjectives.length] = "smooth";
 				adjectives[adjectives.length] = "sleek";
 			}
+			if (hasTailFlag(GLOBAL.FLAG_SCALED))
+			{
+				adjectives.push("scaled");
+				adjectives.push("scaly");
+			}
 			if(tailType == GLOBAL.TYPE_LAPINE)
 			{
 				adjectives[adjectives.length] = "twitching";
@@ -3582,6 +3612,13 @@
 				adjectives.push("writhing");
 				adjectives.push("tentacle-like");
 				adjectives.push("cock-tipped");
+			}
+			else if (tailType == GLOBAL.TYPE_OVIR)
+			{
+				adjectives.push("thick");
+				adjectives.push("ovir");
+				adjectives.push("lizard-like");
+				adjectives.push("tapered");
 			}
 			//Show color 50% of the time
 			if(rand(2) == 0 && adjectives.length > 0) description = adjectives[rand(adjectives.length)] + " ";
@@ -5983,7 +6020,7 @@
 			if (refractoryRate >= 8 && quantity < 50) quantity = 50;
 			if (refractoryRate >= 10 && quantity < 100) quantity = 100;
 			if (refractoryRate >= 15 && quantity < 251) quantity = 251;
-			if (refractoryRate >= 20 && quantity < 1000) quantity = 1000; // @FENCUMFIX - This is what's breaking the ballFullness being set to negative values
+			if (refractoryRate >= 20 && quantity < 1000) quantity = 1000;
 			//Overloaded nuki' nuts will fully drain
 			if(hasPerk("'Nuki Nuts") && balls > 1 && perkv1("'Nuki Nuts") > 0 && quantity < currentCum()) quantity = currentCum();
 			return quantity;
@@ -6595,7 +6632,8 @@
 			var race:String = "human";
 			//Determine race type
 			if (horseScore() >= 2) race = "part horse-morph";
-			if (ausarScore() >= 2 && race == "human") race = "half-ausar";
+			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
+			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
 			if (leithanScore() >= 3 && race == "human") race = "half-leithan";
 			if (nukiScore() >= 2 && race == "human") race = "half kui-tan"
@@ -6612,9 +6650,25 @@
 			if (zilScore() >= 4) race = "zil";
 			if (badgerScore() >= 4) race = "badger";
 			if (naleenScore() >= 5 && isNaga()) race = "naleen";
+			if (ovirScore() >= 5) race = "ovir";
 			else if (isNaga()) race = "naga";
 
 			return race;
+		}
+		
+		public function ovirScore():int
+		{
+			var score:int = 0;
+			if (skinType == GLOBAL.SKIN_TYPE_SCALES && InCollection(scaleColor, "green", "purple", "red", "yellow", "brown", "tan", "olive green")) score++;
+			if (tailType == GLOBAL.TYPE_OVIR) score++;
+			if (hasCock() && balls == 0 && hasStatusEffect("Uniball")) score++;
+			if ((hasCock() || hasVagina()) && hasStatusEffect("Genital Slit")) score++;
+			if (eyeType == GLOBAL.TYPE_SNAKE && InCollection(eyeColor, "green", "blue", "yellow", "red", "grey")) score++;
+			if (tongueType == GLOBAL.TYPE_OVIR) score++;
+			if (legType == GLOBAL.TYPE_OVIR) score++;
+			if (score > 0 && (faceType == GLOBAL.TYPE_HUMAN && !hasFaceFlag(GLOBAL.FLAG_MUZZLED))) score++;
+
+			return score;
 		}
 		
 		public function isHuman():Boolean
@@ -10709,9 +10763,10 @@
 					if(spacingsB) output(" ");
 				}
 				
-				if (hole >= 0 && vaginalVirgin) {
-					holePointer.hymen = false;
+				if (hole >= 0 && vaginalVirgin) 
+				{
 					vaginalVirgin = false;
+					holePointer.hymen = false;
 				}
 				else if (analVirgin) analVirgin = false;
 				devirgined = true;
@@ -10787,6 +10842,7 @@
 			addStatusValue("Alcohol",1,alcoholRating);
 			//100% alcohol is yer cap
 			if(statusEffectv1("Alcohol") >= 100) setStatusValue("Alcohol",1,100);
+			tolerance(1);
 		}
 		public function alcoholTic():void
 		{
@@ -10796,8 +10852,11 @@
 			{
 				//Absorb some into blood.
 				addStatusValue("Alcohol",1,-1);
-				addStatusValue("Alcohol",2,1);
 				setStatusValue("Alcohol",3,0);
+				//Nuki drunk takes twice as much to get drank!
+				if(hasPerk("'Nuki Drunk")) addStatusValue("Alcohol",2,.5);
+				//Normal folks don't!
+				else addStatusValue("Alcohol",2,1);
 				
 				//Updated current hammered level
 				currentLevel = statusEffectv2("Alcohol")
@@ -10848,7 +10907,9 @@
 			else if(statusEffectv2("Alcohol") > 0)
 			{
 				//Pee some out
-				addStatusValue("Alcohol",2,-1);
+				//Nuki drunk takes four times as long to sober up!
+				if(hasPerk("'Nuki Drunk")) addStatusValue("Alcohol",2,-.25);
+				else addStatusValue("Alcohol",2,-1);
 				
 				//Updated current hammered level
 				currentLevel = statusEffectv2("Alcohol")
@@ -10892,6 +10953,19 @@
 			{
 				removeStatusEffect("Alcohol");
 			}
+		}
+		public function tolerance(arg:Number = 0):Number
+		{
+			if(!hasStatusEffect("Tolerance")) createStatusEffect("Tolerance",0,0,0,0);
+			var currentTolerance:Number = statusEffectv1("Tolerance");
+			if(arg != 0) 
+			{
+				addStatusValue("Tolerance",1,arg);
+				//Bounds check
+				if(currentTolerance < 0) setStatusValue("Tolerance",1,0);
+				else if(currentTolerance > 100) setStatusValue("Tolerance",1,100);
+			}
+			return statusEffectv1("Tolerance");
 		}
 		public function isDrunk():Boolean
 		{
